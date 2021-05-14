@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="use_sim_time"  value="true"/>
+    <arg name="map" value="office_1" />
+
+    <!-- search: your solution to the search task -->
+<!--     <node name="search" pkg="mobile_robot_programming" type="search" output="screen" />
+ -->
+	
+	    <node name="search" pkg="mobile_robot_programming" type="search" output="screen" />
+
+    <!-- target check: checks if the robot found the target -->
+<!--    <node name="target_check" pkg ="mobile_robot_programming" type="target_check" output="screen" args="8 15"/> -->
+    <node name="target_check" pkg ="mobile_robot_programming" type="target_check" output="screen"/>
+    <!-- stage: the simulator -->
+    <node name="stage" pkg="stage_ros" type="stageros" args="$(find mobile_robot_programming)/world/office_1.world"/>
+
+    <!-- map server: provides the map -->
+    <node pkg="map_server" type="map_server" name="map_server" args="$(find mobile_robot_programming)/world/$(arg map).yaml"/>
+
+    <!-- amcl: localizes the robot in the map -->
+    <node pkg="amcl" type="amcl" name="amcl">
+        <param name="first_map_only" value="true" />
+        <param name="use_map_topic" value="true" />
+        <remap from="scan" to="base_scan" />
+
+        <param name="odom_frame_id" value="odom" />
+        <param name="base_frame_id" value="base_link" />
+        <param name="initial_pose_x" value="0"/>
+        <param name="initial_pose_y" value="0"/>
+    </node>
+
+    <!-- move base: moves the robot -->
+    <node pkg="move_base" type="move_base" name="move_base">
+        <rosparam file="$(find mobile_robot_programming)/config/common_costmap.yaml" command="load" ns="local_costmap"/>
+        <rosparam file="$(find mobile_robot_programming)/config/common_costmap.yaml" command="load" ns="global_costmap"/>
+        <rosparam file="$(find mobile_robot_programming)/config/navigation.yaml"     command="load"/>
+        <rosparam file="$(find mobile_robot_programming)/config/local_costmap.yaml"  command="load"/>
+        <rosparam file="$(find mobile_robot_programming)/config/global_costmap.yaml" command="load"/>
+    </node>
+</launch>

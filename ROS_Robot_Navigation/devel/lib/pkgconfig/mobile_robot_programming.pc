@@ -1,0 +1,8 @@
+prefix=/home/home/Desktop/ROS/ROS_Robot_Navigation/devel
+
+Name: mobile_robot_programming
+Description: Description of mobile_robot_programming
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

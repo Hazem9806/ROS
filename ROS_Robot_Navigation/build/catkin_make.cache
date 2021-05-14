@@ -1,0 +1,2 @@
+mobile_robot_programming
+-DCATKIN_DEVEL_PREFIX=/home/home/Desktop/ROS/ROS_Robot_Navigation/devel -DCMAKE_INSTALL_PREFIX=/home/home/Desktop/ROS/ROS_Robot_Navigation/install -G Unix Makefiles
