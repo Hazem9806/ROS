@@ -213,7 +213,7 @@ void map_update(const nav_msgs::OccupancyGrid new_map)
     map = new_map;
     map_valid = true;
 }
-
+ 
 void map_read_data(const nav_msgs::OccupancyGrid new_map)
 {
     ROS_INFO("MAP READ DATA STARTED!");
